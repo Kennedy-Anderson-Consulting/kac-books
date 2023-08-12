@@ -11,7 +11,7 @@ requires-python = ">=3.7"
 license = "MIT"
 keywords = []
 authors = [
-  { name = "Kennedy-Anderson-Consulting", email = "kennedy@kennedyandersonconsulting.com" },
+  { name = "Kennedy Anderson Consulting LLC", email = "kennedy@kennedyandersonconsulting.com" },
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
