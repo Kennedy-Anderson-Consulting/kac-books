@@ -1,6 +1,7 @@
 from enum import StrEnum
 
 from kac_books.api.modification_callback import ModificationCallback
+from kac_books.api.journal import Split
 from kac_books.api.commodities import Commodity
 from kac_books.api.value import Value
 
@@ -10,6 +11,19 @@ class Category(StrEnum):
     EQUITY = "EQUITY"
     INCOME = "INCOME"
     EXPENSE = "EXPENSE"
+
+class Ledger(ModificationCallback):
+    """Chronological list of splits associated with an account"""
+
+    account: Account
+
+    def __getitem__(self, index: int) -> Split:
+        """Returns split by index"""
+        pass
+
+    def __len__(self):
+        """Returns length of splits list"""
+        pass
 
 class Account(ModificationCallback):
     """Account api"""
@@ -23,6 +37,7 @@ class Account(ModificationCallback):
     children: list[Account]
     placeholder: bool
     category: Category
+    ledger: Ledger
 
     def edit(self,
              name: str = None,
