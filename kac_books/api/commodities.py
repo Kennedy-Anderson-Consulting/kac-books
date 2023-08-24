@@ -6,12 +6,12 @@ class Commodity:
     name: str
     symbol: str
     description: str
-    price_commodity: Commodity
+    price_commodity: 'Commodity'
 
     def edit(name: str = None,
              symbol: str = None,
              description: str = None,
-             price_commodity: Commodity = None):
+             price_commodity: 'Commodity' = None):
         """edit commodity"""
         pass
 

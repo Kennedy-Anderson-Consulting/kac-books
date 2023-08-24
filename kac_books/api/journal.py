@@ -1,13 +1,13 @@
 from kac_books.api.modification_callback import ModificationCallback
 from kac_books.api.value import Value
-from kac_books.api.account import Account
+from kac_books.api.accounts import Account
 from datetime import date
 
 class Split(ModificationCallback):
     """Single split data"""
 
     split_id: int
-    entry: Entry
+    entry: 'Entry'
     account: Account
     memo: str
     value: Value
@@ -39,7 +39,7 @@ class Journal(ModificationCallback):
     def add_entry(self,
                   date: date = date.today(),
                   description: str = "",
-                  splits: list[dict]):
+                  splits: list[dict] = []):
         """Add entry to journal"""
         pass
 

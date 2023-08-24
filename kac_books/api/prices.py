@@ -1,7 +1,7 @@
 from datetime import date, time
 
 from kac_books.api.modification_callback import ModificationCallback
-from kac_books.api.commodity import Commodity
+from kac_books.api.commodities import Commodity
 from kac_books.api.value import Value
 
 
@@ -16,7 +16,7 @@ class Price(ModificationCallback):
 
     def edit_price(self,
                    commodity: Commodity = None,
-                   value: Value = None
+                   value: Value = None,
                    date: date = None,
                    time: time = None):
         """set price data"""

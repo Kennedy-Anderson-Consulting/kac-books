@@ -32,7 +32,7 @@ CREATE TABLE splits (
 	split_id SERIAL PRIMARY KEY,
 	entry_id int REFERENCES journal_entries NOT NULL,
 	memo text,
-	account text REFERENCES accounts NOT NULL
+	account text REFERENCES accounts NOT NULL,
 	value numeric NOT NULL,
 	commodity varchar(5) REFERENCES commodities NOT NULL
 );
