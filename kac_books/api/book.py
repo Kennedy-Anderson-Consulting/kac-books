@@ -1,3 +1,8 @@
+from os import system
+from pathlib import Path
+
+import psycopg
+
 from kac_books.api.journal import Journal
 from kac_books.api.accounts import Accounts
 from kac_books.api.commodities import Commodities
@@ -13,9 +18,7 @@ class Book(ModificationCallback):
     commodities: Commodities
     prices: Prices
 
-    def __init__(self, name: str,
-                 db_host: str = "localhost",
-                 db_port: str = "5432"):
+    def __init__(self, name: str, db_port: str = "5432"):
         """Connect to existing book database, and return Book object."""
         pass
 
@@ -36,12 +39,17 @@ class Book(ModificationCallback):
         pass
         
 
-def new_book(name: str,
-             db_host: str = "localhost",
-             db_port: str = "5432") -> Book:
+def new_book(name: str, db_port: int = 5432) -> Book:
     """Initialize new book database, and return Book object."""
-    pass
+    sql_path = Path(__file__).parent / "sql"
+    system(f"createdb -p {db_port} {name}")
+    system(f"psql -f {sql_path}/types.sql -p {db_port} {name}")
+    system(f"psql -f {sql_path}/tables.sql -p {db_port} {name}")
+    system(f"psql -f {sql_path}/functions.sql -p {db_port} {name}")
+    system(f"psql -f {sql_path}/triggers.sql -p {db_port} {name}")
+    return Book(name, db_port)
+    
 
-def del_book(name: str, db_host: str = "localhost", db_port: str = "5432"):
+def del_book(name: str, db_port: int = 5432):
     """Permanently delete book database."""
-    pass
+    system(f"dropdb -p {db_port} {name}")
