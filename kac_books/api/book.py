@@ -2,6 +2,8 @@ from os import system
 from pathlib import Path
 
 import psycopg
+from psycopg.rows import dict_row
+from psycopg.pq import TransactionStatus
 
 from kac_books.api.journal import Journal
 from kac_books.api.accounts import Accounts
@@ -18,26 +20,38 @@ class Book(ModificationCallback):
     commodities: Commodities
     prices: Prices
 
-    def __init__(self, name: str, db_port: str = "5432"):
+    def __init__(self, name: str, db_port: int = 5432):
         """Connect to existing book database, and return Book object."""
-        pass
+        self._connection = psycopg.connect(f"dbname={name} port={db_port}",
+                                           row_factory=dict_row)
+        self.journal = Journal(self)
+        self.accounts = Accounts(self)
+        self.commodities = Commodities(self)
+        self.prices = Prices(self)
 
     def commit(self):
         """Commit all changes to book database."""
-        pass
+        self._connection.commit()
 
     def revert(self):
         """Remove all changes, and revert to current state of database."""
-        pass
+        self._connection.rollback()
 
     def update(self):
         """Fetch all updates from the book database."""
         pass
 
-    def execute_sql(self, sql):
+    def execute_sql(self, query, params=None):
         """Execute sql command on book database, returning any response."""
-        pass
-        
+        cursor = self._connection.cursor()
+        while (self._connection.info.transaction_status
+               != TransactionStatus.INTRANS):
+            cursor.execute("") #BEGINs transaction block
+        with self._connection.transaction():
+            cursor.execute(query, params)
+        if cursor.rownumber is not None:
+            return cursor.fetchall()
+
 
 def new_book(name: str, db_port: int = 5432) -> Book:
     """Initialize new book database, and return Book object."""

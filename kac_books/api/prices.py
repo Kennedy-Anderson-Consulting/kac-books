@@ -25,6 +25,10 @@ class Price(ModificationCallback):
 class Prices(ModificationCallback):
     """Cronological list of all prices."""
 
+    def __init__(self, book):
+        """for internal use only"""
+        pass
+
     def last_price(self,
                    commodity: Commodity,
                    date: date = None,

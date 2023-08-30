@@ -36,6 +36,10 @@ class Journal(ModificationCallback):
     entries: list[Entry]
     """Cronological list of entries"""
 
+    def __init__(self, book):
+        """for internal use only"""
+        pass
+
     def add_entry(self,
                   date: date = date.today(),
                   description: str = "",

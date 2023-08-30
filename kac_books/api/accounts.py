@@ -63,6 +63,10 @@ class Account(ModificationCallback):
 class Accounts(ModificationCallback):
     """List of top level accounts in the chart of accounts."""
 
+    def __init__(self, book):
+        """for internal use only"""
+        pass
+
     def add_account(self,
                     name: str,
                     code: str,

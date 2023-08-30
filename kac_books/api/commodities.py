@@ -19,6 +19,10 @@ class Commodity:
 class Commodities:
     """list of all commodities"""
 
+    def __init__(self, book):
+        """for internal use only"""
+        pass
+
     def add_commodity(self,
                       name: str,
                       symbol: str,
